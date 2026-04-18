@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { authService } from "@/services/auth/authService.js";
-import CustomInput from "@/components/custom/CustomInput.jsx";
 import { AlertCircle, CheckCircle } from "lucide-react";
+import signUpImage from "@/assets/signup-illustration.png";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -10,7 +10,6 @@ const RegisterPage = () => {
     fullName: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -60,12 +59,6 @@ const RegisterPage = () => {
         if (!validation.rules.hasSpecialChar) missingRules.push("ký tự đặc biệt");
         newErrors.password = `Mật khẩu phải chứa: ${missingRules.join(", ")}`;
       }
-    }
-
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Xác nhận mật khẩu là bắt buộc";
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Mật khẩu không khớp";
     }
 
     setErrors(newErrors);
@@ -124,11 +117,11 @@ const RegisterPage = () => {
     <div className="min-h-screen bg-background">
       <div className="flex min-h-screen flex-col lg:flex-row">
         {/* Left Side - Image */}
-        <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-blue-100 p-8">
+        <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-cyan-100 p-8">
           <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Sign%20Up-Fm5EjwXsYI1e1GBhgIC1uxwrzaRrzK.jpg"
+            src={signUpImage}
             alt="Shopping cart illustration"
-            className="w-full h-full object-cover rounded-lg"
+            className="w-full object-contain my-8"
           />
         </div>
 
@@ -234,30 +227,6 @@ const RegisterPage = () => {
                 />
                 {errors.password && (
                   <span className="text-xs text-red-500">{errors.password}</span>
-                )}
-              </div>
-
-              {/* Confirm Password */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="confirmPassword"
-                  className="block text-sm font-medium text-foreground"
-                >
-                  Mật khẩu
-                </label>
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  placeholder="Nhập mật khẩu"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="w-full rounded-md border border-input bg-background px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                />
-                {errors.confirmPassword && (
-                  <span className="text-xs text-red-500">
-                    {errors.confirmPassword}
-                  </span>
                 )}
               </div>
 
