@@ -56,7 +56,8 @@ const RegisterPage = () => {
         if (!validation.rules.hasUpperCase) missingRules.push("chữ hoa");
         if (!validation.rules.hasLowerCase) missingRules.push("chữ thường");
         if (!validation.rules.hasNumber) missingRules.push("số");
-        if (!validation.rules.hasSpecialChar) missingRules.push("ký tự đặc biệt");
+        if (!validation.rules.hasSpecialChar)
+          missingRules.push("ký tự đặc biệt");
         newErrors.password = `Mật khẩu phải chứa: ${missingRules.join(", ")}`;
       }
     }
@@ -130,7 +131,9 @@ const RegisterPage = () => {
           <div className="w-full max-w-md space-y-8">
             {/* Header */}
             <div className="space-y-2 text-center">
-              <h1 className="text-3xl font-bold text-foreground">Tạo tài khoản</h1>
+              <h1 className="text-3xl font-bold text-foreground">
+                Tạo tài khoản
+              </h1>
               <p className="text-sm text-muted-foreground">
                 Nhập thông tin của bạn
               </p>
@@ -182,7 +185,9 @@ const RegisterPage = () => {
                   className="w-full rounded-md border border-input bg-background px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
                 {errors.fullName && (
-                  <span className="text-xs text-red-500">{errors.fullName}</span>
+                  <span className="text-xs text-red-500">
+                    {errors.fullName}
+                  </span>
                 )}
               </div>
 
@@ -226,7 +231,9 @@ const RegisterPage = () => {
                   className="w-full rounded-md border border-input bg-background px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
                 {errors.password && (
-                  <span className="text-xs text-red-500">{errors.password}</span>
+                  <span className="text-xs text-red-500">
+                    {errors.password}
+                  </span>
                 )}
               </div>
 
