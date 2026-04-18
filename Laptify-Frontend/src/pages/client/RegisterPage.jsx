@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { authService } from "@/services/auth/authService.js";
 import { AlertCircle, CheckCircle } from "lucide-react";
-import signUpImage from "@/assets/signup-illustration.png";
+import signUpImage from "@/assets/thumbnail.png";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -38,6 +38,8 @@ const RegisterPage = () => {
 
     if (!formData.fullName.trim()) {
       newErrors.fullName = "Họ và tên là bắt buộc";
+    } else if (!/^[A-Za-zÀ-ỹ\s]+$/.test(formData.fullName)) {
+      newErrors.fullName = "Họ và tên chỉ được chứa chữ cái và khoảng trắng";
     }
 
     if (!formData.email.trim()) {
@@ -91,7 +93,7 @@ const RegisterPage = () => {
     setLoading(true);
     try {
       await authService.register({
-        fullName: formData.fullName,
+        name: formData.fullName,
         email: formData.email,
         password: formData.password,
       });
@@ -118,12 +120,14 @@ const RegisterPage = () => {
     <div className="min-h-screen bg-background">
       <div className="flex min-h-screen flex-col lg:flex-row">
         {/* Left Side - Image */}
-        <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-cyan-100 p-8">
-          <img
-            src={signUpImage}
-            alt="Shopping cart illustration"
-            className="w-full object-contain my-8"
-          />
+        <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-cyan-100 p-8 max-h-[80vh] self-center rounded-lg overflow-hidden">
+          <div className="w-full h-full flex items-center justify-center">
+            <img
+              src={signUpImage}
+              alt="Shopping cart illustration"
+              className="max-w-[85%] max-h-[85%] w-auto h-auto object-contain block"
+            />
+          </div>
         </div>
 
         {/* Right Side - Form */}

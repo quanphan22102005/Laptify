@@ -6,7 +6,7 @@ export const authService = {
       const response = await axiosClient.post("/auth/register", userData);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw new Error(error.response?.data?.message || "Đăng ký thất bại");
     }
   },
 
@@ -15,7 +15,7 @@ export const authService = {
       const response = await axiosClient.post("/auth/login", credentials);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw new Error(error.response?.data?.message || "Đăng ký thất bại");
     }
   },
 
@@ -23,7 +23,7 @@ export const authService = {
     try {
       await axiosClient.post("/auth/logout");
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw new Error(error.response?.data?.message || "Đăng ký thất bại");
     }
   },
 };
