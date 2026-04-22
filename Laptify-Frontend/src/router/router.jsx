@@ -104,6 +104,11 @@ export const router = createBrowserRouter([
         path: "about",
         element: <AboutPage />,
       },
+
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      },
     ],
   },
   {
@@ -129,16 +134,6 @@ export const router = createBrowserRouter([
       {
         path: "order-detail/:id",
         element: <OrderDetailPage />,
-      },
-    ],
-  },
-  {
-    path: "*",
-    element: <RootPage />,
-    children: [
-      {
-        index: true,
-        element: <NotFoundPage />,
       },
     ],
   },
