@@ -111,6 +111,9 @@ export const router = createBrowserRouter([
         element: <DemoLoginPage />,
       },
       {
+        path: "*",
+        element: <NotFoundPage />,
+      },
     ],
   },
   {
