@@ -2,6 +2,7 @@ import React from "react";
 import TeamMemberCard from "./components/TeamMemberCard";
 import BenefitCard from "./components/BenefitCard";
 import { Heart, Headphones, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const AboutPage = () => {
   const teamMembers = [
@@ -9,8 +10,7 @@ const AboutPage = () => {
       id: 1,
       name: "Hà Anh Tuấn",
       role: "Người sáng lập & Chủ tịch",
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/About-weQAVxv1blhIeYg39tObEuzmnHkdNk.jpg",
+      image: "/src/assets/ha-anh-tuan.png",
       socialLinks: {
         twitter: "#",
         instagram: "#",
@@ -22,8 +22,7 @@ const AboutPage = () => {
       id: 2,
       name: "Trần Thành",
       role: "Giám đốc điều hành",
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/About-weQAVxv1blhIeYg39tObEuzmnHkdNk.jpg",
+      image: "/src/assets/tran-thanh.png",
       socialLinks: {
         twitter: "#",
         instagram: "#",
@@ -35,8 +34,7 @@ const AboutPage = () => {
       id: 3,
       name: "Sơn Tùng M-TP",
       role: "Nhà thiết kế sản phẩm",
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/About-weQAVxv1blhIeYg39tObEuzmnHkdNk.jpg",
+      image: "/src/assets/son-tung.png",
       socialLinks: {
         twitter: "#",
         instagram: "#",
@@ -57,7 +55,8 @@ const AboutPage = () => {
       id: 2,
       icon: Headphones,
       title: "Chăm sóc khách hàng 24/7",
-      description: "Hỗ trợ chăm sóc khách hàng hàng thần thiên và trực tuyến 24/7",
+      description:
+        "Hỗ trợ chăm sóc khách hàng hàng thần thiên và trực tuyến 24/7",
     },
     {
       id: 3,
@@ -70,10 +69,17 @@ const AboutPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-border">
+      {/* Breadcrumb */}
+      <div className="bg-white">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span className="hover:text-foreground cursor-pointer">Trang chủ</span>
+            {/* Thay span bằng Link và thêm thuộc tính to="/" */}
+            <Link
+              to="/"
+              className="hover:text-foreground cursor-pointer transition-colors"
+            >
+              Trang chủ
+            </Link>
             <span>/</span>
             <span className="text-foreground font-medium">Về chúng tôi</span>
           </div>
@@ -92,28 +98,30 @@ const AboutPage = () => {
 
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  Ra mắt từ năm 2015, Laptify đã khẳng định vị trí của mình là
-                  một cái tên hàng hàng dấu tại Việt Nam. Thay vì mơ hình bán lẻ
-                  thông thường, chúng tôi xây dựng nền tảng thương mại điện tử
-                  lưu hợp tác, triển khai dịch vụ chính thức để phục vụ hơn 3
-                  triệu khách hàng trên toàn quốc.
+                  Ra mắt từ năm 2015, Laptify đã khẳng định vị thế là nền tảng
+                  cung cấp thiết bị công nghệ chính hãng hàng đầu tại Việt Nam.
+                  Thay vì mô hình bán lẻ thông thường, chúng tôi tập trung xây
+                  dựng mạng lưới hợp tác trực tiếp với hơn 150 thương hiệu công
+                  nghệ danh tiếng, cam kết mang đến những sản phẩm chất lượng
+                  nhất và dịch vụ hậu mãi tiêu chuẩn quốc tế cho hơn 3 triệu
+                  khách hàng trên toàn quốc.
                 </p>
 
                 <p>
-                  Với doanh mục sản phẩm chuyên sâu, Laptify mang đến hệ sinh
-                  thái toàn diện với các dòng sản phẩm chất lượng cao như region 5
-                  đến các phụ kiện tương như chuột gaming, tai nghe và bàn phím cơ
-                  cấp. Chúng tôi không chỉ cung cấp hiệu ứng độc phó, mà còn mang
-                  đến những giải pháp công nghệ đột phá, giúp tối ưu hóa trải
-                  nghiệm làm việc và giải trí của mỗi người dùng Việt.
+                  Với danh mục sản phẩm chuyên sâu, Laptify mang đến hệ sinh
+                  thái toàn diện từ các dòng laptop hiệu năng cao như Legion 5
+                  đến các phụ kiện tuyển chọn như chuột gaming, tai nghe và bàn
+                  phím cơ cao cấp. Chúng tôi không chỉ cung cấp thiết bị, mà còn
+                  mang đến những giải pháp công nghệ đột phá, giúp tối ưu hóa
+                  trải nghiệm làm việc và giải trí của mọi người dùng Việt.
                 </p>
               </div>
             </div>
 
             {/* Image Content */}
-            <div className="h-96 rounded-lg overflow-hidden shadow-lg">
+            <div className="h-110 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/About-weQAVxv1blhIeYg39tObEuzmnHkdNk.jpg"
+                src="/src/assets/about-us.png"
                 alt="Laptify Team"
                 className="w-full h-full object-cover"
               />
@@ -134,7 +142,7 @@ const AboutPage = () => {
             nghệ, cam kết mang lại trải nghiệm tốt nhất cho khách hàng
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px] items-start">
             {teamMembers.map((member) => (
               <TeamMemberCard key={member.id} member={member} />
             ))}

@@ -1,11 +1,11 @@
 import React from "react";
-import { Twitter, Instagram, Linkedin } from "lucide-react";
+// import { Twitter, Instagram, Linkedin } from "lucide-react";
 
 const TeamMemberCard = ({ member }) => {
   return (
     <div className="group">
       {/* Image Container with Hover Effects */}
-      <div className="relative overflow-hidden rounded-lg bg-gray-100 h-80 mb-6 shadow-md transition-shadow duration-300 group-hover:shadow-xl">
+      <div className="relative overflow-hidden rounded-lg bg-gray-100 w-[370px] h-[470px] mb-6 shadow-md transition-shadow duration-300 group-hover:shadow-xl">
         <img
           src={member.image}
           alt={member.name}
@@ -29,31 +29,31 @@ const TeamMemberCard = ({ member }) => {
         {/* Social Links */}
         <div className="flex justify-center gap-4 opacity-0 transition-all duration-300 group-hover:opacity-100">
           {/* Twitter */}
-          <a
+          {/* <a
             href={member.socialLinks.twitter}
             className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300 transform hover:scale-110"
             aria-label="Twitter"
           >
             <Twitter className="w-5 h-5" />
-          </a>
+          </a> */}
 
           {/* Instagram */}
-          <a
+          {/* <a
             href={member.socialLinks.instagram}
             className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300 transform hover:scale-110"
             aria-label="Instagram"
           >
             <Instagram className="w-5 h-5" />
-          </a>
+          </a> */}
 
           {/* LinkedIn */}
-          <a
+          {/* <a
             href={member.socialLinks.linkedin}
             className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300 transform hover:scale-110"
             aria-label="LinkedIn"
           >
             <Linkedin className="w-5 h-5" />
-          </a>
+          </a> */}
         </div>
       </div>
     </div>
