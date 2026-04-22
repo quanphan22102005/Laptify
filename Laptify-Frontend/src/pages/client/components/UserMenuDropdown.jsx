@@ -33,18 +33,18 @@ const UserMenuDropdown = ({ user }) => {
       {/* Profile Icon Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex size-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-accent"
+        className="flex size-10 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:bg-accent hover:scale-110"
         aria-label="User menu"
         aria-expanded={isOpen}
       >
-        <User className="size-5" />
+        <User className="size-5 transition-transform duration-200" />
       </button>
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-48 rounded-md border border-input bg-background shadow-2xl z-50">
+        <div className="absolute right-0 top-full mt-2 w-48 rounded-md border border-input bg-background shadow-2xl z-50 animate-fade-in-scale">
           {/* User Info */}
-          <div className="border-b border-input px-4 py-3">
+          <div className="border-b border-input px-4 py-3 animate-fade-in">
             <p className="text-sm font-medium text-foreground">{userName}</p>
             {user?.email && <p className="text-xs text-muted-foreground">{user.email}</p>}
           </div>
@@ -53,10 +53,10 @@ const UserMenuDropdown = ({ user }) => {
           <nav className="py-2">
             <Link
               to="/profile"
-              className="flex items-center gap-2 px-4 py-2 text-sm text-foreground transition-colors hover:bg-accent"
+              className="flex items-center gap-2 px-4 py-2 text-sm text-foreground transition-all duration-200 hover:bg-accent hover:translate-x-1"
               onClick={() => setIsOpen(false)}
             >
-              <User className="size-4" />
+              <User className="size-4 transition-transform duration-200 group-hover:scale-110" />
               Hồ sơ
             </Link>
           </nav>
@@ -65,9 +65,9 @@ const UserMenuDropdown = ({ user }) => {
           <div className="border-t border-input py-2">
             <button
               onClick={handleLogout}
-              className="flex w-full items-center gap-2 px-4 py-2 text-sm text-foreground transition-colors hover:bg-accent"
+              className="flex w-full items-center gap-2 px-4 py-2 text-sm text-foreground transition-all duration-200 hover:bg-accent hover:translate-x-1"
             >
-              <LogOut className="size-4" />
+              <LogOut className="size-4 transition-transform duration-200" />
               Đăng xuất
             </button>
           </div>
