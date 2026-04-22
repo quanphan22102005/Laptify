@@ -16,6 +16,7 @@ const Header = () => {
       navigate(
         `/products/search?keyword=${encodeURIComponent(searchQuery.trim())}`,
       );
+      setSearchQuery("");
     }
   };
 
@@ -25,15 +26,6 @@ const Header = () => {
     { label: "Về chúng tôi", path: "/about" },
     { label: "Đăng ký", path: "/register" },
   ];
-
-  const handleSearch = (e) => {
-    if (e.key === "Enter" && searchQuery.trim()) {
-      navigate(
-        `/products/search?keyword=${encodeURIComponent(searchQuery.trim())}`,
-      );
-      setSearchQuery("");
-    }
-  };
 
   return (
     <header className="w-full">
