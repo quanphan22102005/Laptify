@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Phone, Mail, CheckCircle, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -26,6 +27,13 @@ const ContactPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
+
+    const nameRegex = /^[a-zA-ZÀ-ỹ\s]+$/;
+    if (!formData.name.trim()) {
+      newErrors.name = "Vui lòng nhập họ và tên";
+    } else if (!nameRegex.test(formData.name)) {
+      newErrors.name = "Họ và tên chỉ được chứa chữ cái và khoảng trắng";
+    }
 
     if (!formData.name.trim()) {
       newErrors.name = "Vui lòng nhập họ và tên";
@@ -91,12 +99,18 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Breadcrumb */}
-      <div className="border-b border-border bg-background">
+      <div className="bg-background">
         <div className="mx-auto max-w-7xl px-4 py-4">
-          <nav className="text-sm text-muted-foreground">
-            <span className="cursor-pointer hover:text-foreground">Trang chủ</span>
+          <nav className="text-sm text-muted-foreground font-poppins">
+            {/* 2. Thay span bằng Link để có thể click quay về trang chủ */}
+            <Link
+              to="/"
+              className="cursor-pointer hover:text-foreground transition-colors"
+            >
+              Trang chủ
+            </Link>
             <span className="mx-2">/</span>
-            <span className="text-foreground">Liên hệ</span>
+            <span className="text-foreground font-medium">Liên hệ</span>
           </nav>
         </div>
       </div>
@@ -141,7 +155,8 @@ const ContactPage = () => {
               </div>
               <div className="space-y-2 pl-13">
                 <p className="text-sm text-muted-foreground">
-                  Điền vào biểu mẫu và chúng tôi sẽ liên hệ lại trong vòng 24 giờ.
+                  Điền vào biểu mẫu và chúng tôi sẽ liên hệ lại trong vòng 24
+                  giờ.
                 </p>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-foreground">
