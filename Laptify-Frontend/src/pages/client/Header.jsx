@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, Heart, ShoppingCart } from "lucide-react";
+import { useSelector } from "react-redux";
+import { Search, Heart, ShoppingCart, Menu } from "lucide-react";
+import UserMenuDropdown from "./components/UserMenuDropdown";
+import MobileMenu from "./components/MobileMenu";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const handleSearch = (e) => {
     if (e.key === "Enter" && searchQuery.trim()) {
@@ -20,6 +25,15 @@ const Header = () => {
     { label: "Về chúng tôi", path: "/about" },
     { label: "Đăng ký", path: "/register" },
   ];
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      navigate(
+        `/products/search?keyword=${encodeURIComponent(searchQuery.trim())}`,
+      );
+      setSearchQuery("");
+    }
+  };
 
   return (
     <header className="w-full">
@@ -39,12 +53,21 @@ const Header = () => {
       {/* Main Header */}
       <div className="border-b border-border bg-background">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
+          {/* Hamburger Menu Button - Mobile */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="flex md:hidden items-center justify-center rounded-md p-2 text-foreground hover:bg-accent"
+            aria-label="Toggle menu"
+          >
+            <Menu className="size-5" />
+          </button>
+
           {/* Logo */}
           <Link to="/" className="text-xl font-bold text-foreground">
             Laptify
           </Link>
 
-          {/* Navigation */}
+          {/* Navigation - Desktop */}
           <nav className="hidden items-center gap-8 md:flex">
             {navItems.map((item) => (
               <Link
@@ -72,26 +95,49 @@ const Header = () => {
               <Search className="absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             </div>
 
-            {/* Wishlist Icon */}
-            <Link
-              to="/wish-list"
-              className="flex size-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-accent"
-              aria-label="Yêu thích"
-            >
-              <Heart className="size-5" />
-            </Link>
+            {/* Authenticated User - Icons and Menu */}
+            {isAuthenticated ? (
+              <>
+                {/* Wishlist Icon */}
+                <Link
+                  to="/wish-list"
+                  className="flex size-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-accent"
+                  aria-label="Yêu thích"
+                >
+                  <Heart className="size-5" />
+                </Link>
 
-            {/* Cart Icon */}
-            <Link
-              to="/cart"
-              className="flex size-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-accent"
-              aria-label="Giỏ hàng"
-            >
-              <ShoppingCart className="size-5" />
-            </Link>
+                {/* Cart Icon */}
+                <Link
+                  to="/cart"
+                  className="flex size-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-accent"
+                  aria-label="Giỏ hàng"
+                >
+                  <ShoppingCart className="size-5" />
+                </Link>
+
+                {/* User Menu Dropdown */}
+                <UserMenuDropdown user={user} />
+              </>
+            ) : (
+              /* Login Button - for unauthenticated users */
+              <Link
+                to="/login"
+                className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-80"
+              >
+                Đăng nhập
+              </Link>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        navItems={navItems}
+      />
     </header>
   );
 };
