@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Search, Heart, ShoppingCart, Menu } from "lucide-react";
 import UserMenuDropdown from "./components/UserMenuDropdown";
@@ -43,7 +43,7 @@ const Header = () => {
       </div>
 
       {/* Main Header */}
-      <div className="border-b border-border bg-background">
+      <div className="border-b border-border bg-background z-40 relative">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
           {/* Hamburger Menu Button - Mobile */}
           <button
@@ -62,13 +62,19 @@ const Header = () => {
           {/* Navigation - Desktop */}
           <nav className="hidden items-center gap-12 md:flex">
             {navItems.map((item) => (
-              <Link
+              <NavLink
                 key={item.path}
                 to={item.path}
-                className="text-sm font-medium text-foreground transition-colors hover:text-muted-foreground"
+                className={({ isActive }) =>
+                  `text-sm font-medium transition-colors ${
+                    isActive
+                      ? "text-foreground border-b-2 border-foreground pb-1"
+                      : "text-foreground hover:text-muted-foreground"
+                  }`
+                }
               >
                 {item.label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
 

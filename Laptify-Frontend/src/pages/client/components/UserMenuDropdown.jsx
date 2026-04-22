@@ -29,7 +29,7 @@ const UserMenuDropdown = ({ user }) => {
   const userName = user?.name || user?.email || "User";
 
   return (
-    <div className="relative" ref={menuRef}>
+    <div className="relative z-50" ref={menuRef}>
       {/* Profile Icon Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -42,7 +42,7 @@ const UserMenuDropdown = ({ user }) => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-48 rounded-md border border-input bg-background shadow-lg">
+        <div className="absolute right-0 top-full mt-2 w-48 rounded-md border border-input bg-background shadow-2xl z-50">
           {/* User Info */}
           <div className="border-b border-input px-4 py-3">
             <p className="text-sm font-medium text-foreground">{userName}</p>
