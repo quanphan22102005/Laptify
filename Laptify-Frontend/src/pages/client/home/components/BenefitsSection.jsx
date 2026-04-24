@@ -18,13 +18,15 @@ const BenefitCard = ({ benefit, index }) => {
     >
       {/* Icon Container */}
       <div className="flex justify-center mb-6">
-        <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600">
+        {/* Đã xóa group-hover:bg-red-600, chỉ giữ lại group-hover:scale-110 */}
+        <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110">
           <Icon className="w-8 h-8 text-white" />
         </div>
       </div>
 
       {/* Title */}
-      <h3 className="text-lg font-bold text-gray-900 mb-3 transition-colors duration-300 group-hover:text-red-600">
+      {/* Đã xóa group-hover:text-red-600 để giữ nguyên màu text-gray-900 */}
+      <h3 className="text-lg font-bold text-gray-900 mb-3 transition-colors duration-300">
         {benefit.title}
       </h3>
 
@@ -46,7 +48,8 @@ const BenefitsSection = () => {
     {
       icon: Headphones,
       title: "Chăm sóc khách hàng 24/7",
-      description: "Hỗ trợ chăm sóc khách hàng hàng thân thiện và trực tuyến 24/7",
+      description:
+        "Hỗ trợ chăm sóc khách hàng hàng thân thiện và trực tuyến 24/7",
     },
     {
       icon: Shield,
