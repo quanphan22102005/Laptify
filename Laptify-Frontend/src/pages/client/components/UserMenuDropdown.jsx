@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "@/feature/auth/authSlice.js";
+import { authService } from "@/services/auth/authService.js";
 import { User, LogOut } from "lucide-react";
 
 const UserMenuDropdown = ({ user }) => {
@@ -21,7 +22,14 @@ const UserMenuDropdown = ({ user }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      // Call logout API to clear tokens on backend
+      await authService.logout();
+    } catch (error) {
+      console.error("Logout API call failed:", error);
+    }
+    // Clear local state regardless of API success/failure
     dispatch(logout());
     setIsOpen(false);
   };

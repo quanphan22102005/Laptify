@@ -13,7 +13,17 @@ export const authService = {
   login: async (credentials) => {
     try {
       const response = await axiosClient.post("/auth/login", credentials);
-      return response.data;
+      // Extract user data and access token from backend response
+      const { data, accessToken } = response.data;
+      return {
+        user: {
+          id: data.id,
+          email: data.email,
+          name: data.name,
+          role: data.role,
+        },
+        accessToken: accessToken,
+      };
     } catch (error) {
       throw new Error(error.response?.data?.message || "Đăng nhập thất bại");
     }

@@ -88,15 +88,15 @@ const LoginPage = () => {
 
     setLoading(true);
     try {
-      await authService.login({
+      const response = await authService.login({
         email: formData.email,
         password: formData.password,
       });
 
-      // Dispatch login success to Redux with user data
+      // Dispatch login success with actual backend data
       dispatch(loginSuccess({
-        email: formData.email,
-        name: formData.email.split('@')[0] // Use email prefix as name for demo
+        user: response.user,
+        accessToken: response.accessToken,
       }));
 
       setNotification({
