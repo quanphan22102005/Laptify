@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "@/feature/auth/authSlice.js";
 import { authService } from "@/services/auth/authService.js";
@@ -9,6 +9,7 @@ const UserMenuDropdown = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -24,14 +25,18 @@ const UserMenuDropdown = ({ user }) => {
 
   const handleLogout = async () => {
     try {
-      // Call logout API to clear tokens on backend
+      // 1. Gọi API để Backend xóa session/token (nếu có logic ở BE)
       await authService.logout();
     } catch (error) {
       console.error("Logout API call failed:", error);
+    } finally {
+      // 2. Clear state trong Redux và LocalStorage (Action này đã có logic xóa localStorage)
+      dispatch(logout());
+      setIsOpen(false);
+
+      // 3. Đưa người dùng về trang chủ hoặc Login
+      navigate("/login");
     }
-    // Clear local state regardless of API success/failure
-    dispatch(logout());
-    setIsOpen(false);
   };
 
   const userName = user?.name || user?.email || "User";
@@ -54,7 +59,9 @@ const UserMenuDropdown = ({ user }) => {
           {/* User Info */}
           <div className="border-b border-input px-4 py-3 animate-fade-in">
             <p className="text-sm font-medium text-foreground">{userName}</p>
-            {user?.email && <p className="text-xs text-muted-foreground">{user.email}</p>}
+            {user?.email && (
+              <p className="text-xs text-muted-foreground">{user.email}</p>
+            )}
           </div>
 
           {/* Menu Items */}
