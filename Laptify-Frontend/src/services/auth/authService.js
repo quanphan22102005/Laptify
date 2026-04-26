@@ -3,10 +3,11 @@ import { axiosClient } from "@/lib/axiosClient.js";
 export const authService = {
   register: async (userData) => {
     try {
+      // Backend của Quân yêu cầu: { name, email, password }
       const response = await axiosClient.post("/auth/register", userData);
       return response.data;
     } catch (error) {
-      throw new Error(error.response?.data?.message || "Đăng ký thất bại");
+      throw error; // Quăng error để Thunk bắt được
     }
   },
 
