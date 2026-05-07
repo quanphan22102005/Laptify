@@ -24,23 +24,8 @@ const OrderManagementPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
   const itemsPerPage = 5;
-
-  useEffect(() => {
-    const fecthOrders = async () => {
-      const res = (
-        await getOrdersDisPlayForAdmin({
-          size: itemsPerPage,
-          page: currentPage - 1,
-        })
-      ).data;
-      console.log(res.data);
-      setOrders(res.data);
-      setFilteredOrders(res.data);
-      setTotalPages(res.totalPages);
-    };
-    fecthOrders();
-  }, [currentPage]);
 
   const [filters, setFilters] = useState({
     id: '',
@@ -48,6 +33,48 @@ const OrderManagementPage = () => {
     status: '',
     orderDate: '',
   });
+
+  useEffect(() => {
+    const fecthOrders = async () => {
+      try {
+        setIsLoading(true);
+        if (isFiltered) {
+          // Nếu đang filter, gửi filter params
+          const params = new URLSearchParams({
+            page: (currentPage - 1).toString(),
+            size: itemsPerPage.toString(),
+          });
+
+          if (filters.id) params.append('orderId', filters.id);
+          if (filters.phoneNumber)
+            params.append('phoneNumber', filters.phoneNumber);
+          if (filters.status) params.append('status', filters.status);
+          if (filters.orderDate) params.append('orderDate', filters.orderDate);
+
+          const res = (await searchOrderByFilter({ params: params.toString() }))
+            .data;
+          setFilteredOrders(res.data);
+          setTotalPages(res.totalPages);
+        } else {
+          // Fetch tất cả order khi không filter
+          const res = (
+            await getOrdersDisPlayForAdmin({
+              size: itemsPerPage,
+              page: currentPage - 1,
+            })
+          ).data;
+          setOrders(res.data);
+          setFilteredOrders(res.data);
+          setTotalPages(res.totalPages);
+        }
+      } catch (e) {
+        console.error('Fetch orders error:', e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fecthOrders();
+  }, [currentPage, isFiltered, filters]);
 
   const handleFilterChange = (filterName, value) => {
     console.log(filterName + ' ' + value);
@@ -62,13 +89,10 @@ const OrderManagementPage = () => {
       try {
         setIsLoading(true);
         const params = new URLSearchParams({
-          page: (currentPage - 1).toString(),
+          page: 0,
           size: itemsPerPage.toString(),
         });
 
-        console.log(filters.id);
-
-        // Thêm các filter vào params nếu có giá trị
         if (filters.id) params.append('orderId', filters.id);
         if (filters.phoneNumber)
           params.append('phoneNumber', filters.phoneNumber);
@@ -81,6 +105,7 @@ const OrderManagementPage = () => {
         setFilteredOrders(res.data);
         setTotalPages(res.totalPages);
         setCurrentPage(1);
+        setIsFiltered(true);
         toast.success('Tìm kiếm đơn hàng thành công');
       } catch (e) {
         const message = getErrorMessage(e, 'Tìm kiếm đơn hàng thất bại');
@@ -100,13 +125,13 @@ const OrderManagementPage = () => {
       status: '',
       orderDate: '',
     });
-    setFilteredOrders(orders);
+    setIsFiltered(false);
     setCurrentPage(1);
   };
 
   const handleDelete = async (id) => {
     if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này?')) {
-      await deleteOrderById(id)
+      await deleteOrderById(id);
       const updated = orders.filter((o) => o.id !== id);
       setOrders(updated);
       setFilteredOrders(
@@ -154,13 +179,6 @@ const OrderManagementPage = () => {
         <h2 className='text-xl font-semibold text-gray-800'>
           Danh sách đơn hàng
         </h2>
-        <Button
-          onClick={() => {}}
-          className='px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition font-medium'
-        >
-          <Plus size={20} />
-          Thêm sản phẩm
-        </Button>
       </div>
 
       <OrderTable

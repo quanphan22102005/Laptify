@@ -1,10 +1,11 @@
 import { Trash2, Edit3 } from 'lucide-react';
+import { orderStatuses } from '../../../utils/orderHelper';
 
-export default function OrderTable({
-  orders,
-  onDelete,
-  onEdit,
-}) {
+export default function OrderTable({ orders, onDelete, onEdit }) {
+  const getStatusColor = (status) => {
+    const statusObj = orderStatuses.find((s) => s.value === status);
+    return statusObj?.color || 'bg-gray-100 text-gray-800';
+  };
   const currentItems = orders;
 
   return (
@@ -66,15 +67,9 @@ export default function OrderTable({
                   </td>
                   <td className='px-6 py-4 text-sm'>
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        order.status === 'Đang đóng gói'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : order.status === 'Đơn hàng mới'
-                            ? 'bg-blue-100 text-blue-800'
-                            : order.status === 'Đang vận chuyển'
-                              ? 'bg-purple-100 text-purple-800'
-                              : 'bg-green-100 text-green-800'
-                      }`}
+                      className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+                        order.status
+                      )}`}
                     >
                       {order.status}
                     </span>
