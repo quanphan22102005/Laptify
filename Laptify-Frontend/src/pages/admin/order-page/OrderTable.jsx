@@ -1,5 +1,7 @@
 import { Trash2, Edit3 } from 'lucide-react';
 import { orderStatuses } from '../../../utils/orderHelper';
+import { formatDate } from '@/utils/convertHelper.js';
+import { ConfirmDialog } from '@/components/custom/ConfirmDialog.jsx';
 
 export default function OrderTable({ orders, onDelete, onEdit }) {
   const getStatusColor = (status) => {
@@ -57,7 +59,7 @@ export default function OrderTable({ orders, onDelete, onEdit }) {
                     {order.phoneNumber}
                   </td>
                   <td className='px-6 py-4 text-sm text-gray-700'>
-                    {order.orderDate}
+                    {formatDate(order.orderDate)}
                   </td>
                   <td className='px-6 py-4 text-sm text-gray-700'>
                     {order.totalPrice.toLocaleString('vi-VN', {
@@ -76,13 +78,16 @@ export default function OrderTable({ orders, onDelete, onEdit }) {
                   </td>
                   <td className='px-6 py-4 text-center'>
                     <div className='flex items-center justify-center gap-2'>
-                      <button
-                        onClick={() => onDelete(order.id)}
-                        className='p-2 text-red-600 hover:bg-red-50 rounded-md transition'
-                        title='Xóa'
-                      >
-                        <Trash2 size={18} />
-                      </button>
+                      <ConfirmDialog 
+                      title='Xóa đơn hàng'
+                      description='Bạn có chắc chắn muốn cóa đơn hàng này không?'
+                      onConfirm={() => onDelete(order.id)}>
+                        <button
+                          className='p-2 text-red-600 hover:bg-red-50 rounded-md transition'
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </ConfirmDialog>
                       <button
                         onClick={() => onEdit(order.id)}
                         className='p-2 text-gray-600 hover:bg-gray-100 rounded-md transition'

@@ -5,6 +5,7 @@ import { ArrowLeft, ChevronLeft } from 'lucide-react';
 import PricingSection from '@/pages/common/order-management/PricingSection.jsx';
 import OrderItemSection from '@/pages/common/order-management/OrderItemSection.jsx';
 import {
+  deleteOrderById,
   getOrderById,
   updateOrderForAdmin,
   updateOrderStatusForAdmin,
@@ -14,6 +15,7 @@ import { getErrorMessage } from '@/lib/axiosClient.js';
 import LoadingSpinner from '@/components/custom/LoadingSpinner.jsx';
 import CustomSelect from '@/components/custom/CustomSelect.jsx';
 import { orderStatuses } from '@/utils/orderHelper.js';
+import { ConfirmDialog } from '@/components/custom/ConfirmDialog.jsx';
 
 // Mock data for orders with detailed information
 
@@ -153,14 +155,10 @@ export default function OrderDetailPage() {
     updateOrder();
   };
 
-  const handleDelete = () => {
-    if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này?')) {
-      // TODO: Call API to delete order
-      console.log('Deleting order:', id);
-      alert('Xóa đơn hàng thành công');
+  const handleDelete = async () => {
+      await deleteOrderById(id)
       navigate(-1);
-    }
-  };
+  }
 
   return (
     <div className='mx-auto'>
@@ -277,12 +275,17 @@ export default function OrderDetailPage() {
 
       {/* Button Group */}
       <div className=' flex justify-end gap-4'>
-        <Button
-          onClick={handleDelete}
-          className='px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition font-medium'
+        <ConfirmDialog
+          title='Xóa đơn hàng'
+          description='Bạn có chắc chắn muốn cóa đơn hàng này không?'
+          onConfirm={handleDelete}
         >
-          Xóa đơn hàng
-        </Button>
+          <Button
+            className='px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition font-medium'
+          >
+            Xóa đơn hàng
+          </Button>
+        </ConfirmDialog>
         <Button
           onClick={handleUpdate}
           className='px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition font-medium'

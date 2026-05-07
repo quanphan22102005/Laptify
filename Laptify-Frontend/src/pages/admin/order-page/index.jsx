@@ -130,7 +130,6 @@ const OrderManagementPage = () => {
   };
 
   const handleDelete = async (id) => {
-    if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này?')) {
       await deleteOrderById(id);
       const updated = orders.filter((o) => o.id !== id);
       setOrders(updated);
@@ -154,7 +153,6 @@ const OrderManagementPage = () => {
           return matchOrderId && matchPhone && matchStatus && matchOrderDate;
         })
       );
-    }
   };
 
   const handleEdit = (id) => {
