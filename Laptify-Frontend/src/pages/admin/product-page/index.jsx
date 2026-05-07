@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Pagination from '@/components/custom/Paganation.jsx';
 import ProductTable from '@/pages/admin/product-page/ProductTable.jsx';
@@ -8,6 +8,9 @@ import { Plus } from 'lucide-react';
 import {getProductSummaries } from '@/services/productApi.js';
 import { getErrorMessage } from '@/lib/axiosClient.js';
 import { toast } from 'sonner';
+import { getCategories } from '@/services/categoryApi.js';
+import { getBrands } from '@/services/brandApi.js';
+import LoadingSpinner from '@/components/custom/LoadingSpinner.jsx';
 
 
 const ProductManagementPage = () => {
@@ -16,6 +19,8 @@ const ProductManagementPage = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [brands, setBrands] = useState([])
+  const [categories, setCategories] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const itemsPerPage = 5;
@@ -35,8 +40,54 @@ const ProductManagementPage = () => {
         setIsLoading(false)
       }
     }
+
+    const fetchCategories = async () => {
+      try {
+        const res = (await getCategories()).data;
+        setCategories(res);
+      } catch (e) {
+        const message = getErrorMessage(e, 'Lấy dánh sách sản phẩm thất bại');
+        toast.error(message);
+      }
+    };
+
+    const fetchBrands = async () => {
+      try {
+        const res = (await getBrands()).data;
+        setBrands(res);
+      } catch (e) {
+        const message = getErrorMessage(e, 'Lấy dánh sách sản phẩm thất bại');
+        toast.error(message);
+      }
+    };
+    fetchBrands();
+    fetchCategories();
     fetchProducts()
   } ,[currentPage, itemsPerPage])
+
+  // useEffect(() => {
+  //   const fetchCategories = async() =>{
+  //     try{
+  //       const res = (await getCategories()).data
+  //       setCategories(res)
+  //     }catch(e){
+  //       const message = getErrorMessage(e, 'Lấy dánh sách sản phẩm thất bại');
+  //       toast.error(message);
+  //     }
+  //   }
+
+  //   const fetchBrands = async () => {
+  //     try {
+  //       const res = (await getBrands()).data;
+  //       setBrands(res);
+  //     } catch (e) {
+  //       const message = getErrorMessage(e, 'Lấy dánh sách sản phẩm thất bại');
+  //       toast.error(message);
+  //     }
+  //   };
+  //   fetchBrands()
+  //   fetchCategories()
+  // }, [])
 
   const [filters, setFilters] = useState({
     id: '',
@@ -124,6 +175,25 @@ const ProductManagementPage = () => {
     navigate(`/admin/product-updating/${id}`);
   };
 
+  const brandData = useCallback(() => {
+    var arr =  brands.map(item =>  ({value : item.id, label: item.name}));
+
+    return arr.sort((a, b) =>
+      a.label.localeCompare(b.label, undefined, { sensitivity: 'base' })
+    );
+
+  }, [brands])
+
+  const categoriesData = useCallback(() => {
+    return categories.map((item) => ({ value: item.id, label: item.name }));
+  }, [categories]);
+
+  if(isLoading){
+    return <div className="">
+      <LoadingSpinner description={"Đang tải dữ liệu sản phẩm"}/>
+    </div>
+  }
+
 
   return (
     <div>
@@ -136,6 +206,8 @@ const ProductManagementPage = () => {
         onFilterChange={handleFilterChange}
         onSearch={handleSearch}
         onClear={handleClear}
+        brands={brandData()}
+        categories={categoriesData()}
       />
 
       <div className='flex items-center justify-between mb-4'>

@@ -4,8 +4,10 @@ import fit.iuh.laptify_backend.product.dto.common.PageRequest;
 import fit.iuh.laptify_backend.product.dto.common.PageResponse;
 import fit.iuh.laptify_backend.product.dto.request.ProductCreationRequest;
 import fit.iuh.laptify_backend.product.dto.request.ProductFilter;
+import fit.iuh.laptify_backend.product.dto.response.CategoryResponse;
 import fit.iuh.laptify_backend.product.dto.response.ProductDetailResponse;
 import fit.iuh.laptify_backend.product.dto.response.ProductResponse;
+import fit.iuh.laptify_backend.product.service.CategoryService;
 import fit.iuh.laptify_backend.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController {
     private final ProductService productService;
+    private final CategoryService categoryService;
 
     @GetMapping("/{category_id}/products")
     public ResponseEntity<PageResponse<List<ProductResponse>>> getProductsByCategoryId(
@@ -31,5 +34,12 @@ public class CategoryController {
         PageRequest pageRequest = new PageRequest(page, size);
         return ResponseEntity.ok(productService.getProductsByCategoryId(categoryId, pageRequest));
     }
+
+    @GetMapping()
+    public ResponseEntity<List<CategoryResponse>> getCategories()
+    {
+        return ResponseEntity.ok(categoryService.getCategories());
+    }
+
 }
 

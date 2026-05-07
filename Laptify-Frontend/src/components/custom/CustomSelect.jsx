@@ -1,5 +1,5 @@
 import { ChevronDown } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function CustomSelect({
   label,
@@ -11,6 +11,26 @@ export default function CustomSelect({
   disabled = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const selectedOption = options.find((opt) => {
     // Support both id-based (new structure) and value-based (old structure)
@@ -18,7 +38,7 @@ export default function CustomSelect({
   });
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-2' ref={containerRef}>
       {label && (
         <label className='text-sm font-medium text-gray-700'>{label}</label>
       )}

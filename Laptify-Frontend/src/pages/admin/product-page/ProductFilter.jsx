@@ -8,7 +8,7 @@ export default function ProductFilter({
   onSearch,
   onClear,
   categories = [],
-  manufacturers = [],
+  brands = [],
 }) {
   return (
     <div className='bg-white rounded-lg shadow-md p-6 mb-6'>
@@ -45,7 +45,7 @@ export default function ProductFilter({
             placeholder='Chọn hãng sản xuất'
             value={filters.manufacturer}
             onChange={(value) => onFilterChange('manufacturer', value)}
-            options={manufacturers}
+            options={brands}
           />
         </div>
       </div>
