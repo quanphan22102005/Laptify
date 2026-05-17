@@ -89,7 +89,7 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: 'wishlist',
+        path: 'wish-list',
         element: (
           <ProtectedRoute>
             <UserWishlistPage />
