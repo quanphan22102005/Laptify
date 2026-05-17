@@ -55,6 +55,7 @@ export default function CategoryDialog({
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files || []);
+    console.log(files)
     files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -222,7 +223,7 @@ export default function CategoryDialog({
                       className='relative group rounded-lg overflow-hidden bg-white'
                     >
                       <img
-                        src={image.url}
+                        src={image.src}
                         alt={image.name}
                         className='w-full h-24 object-cover'
                       />

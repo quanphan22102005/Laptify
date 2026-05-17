@@ -81,6 +81,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
 
+
     @Override
     public AuthResult login(UserLoginRequest request) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
@@ -176,6 +177,23 @@ public class AuthServiceImpl implements AuthService {
     private RefreshToken buildRefreshToken(User user) {
         JwtGenerationDto dto = jwtTokenProvider.generateRefreshToken(user);
         return new RefreshToken(dto.getJid(), dto.getToken(), user);
+    }
+
+    // Utility main for local testing: hash passwords and print example payloads / commands.
+    // This method is intended to be run from IDE or command line to produce example data only.
+    public static void main(String[] args) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        String rawUserPassword = "User@123";
+        String rawAdminPassword = "Admin@123";
+
+        String hashedUser = encoder.encode(rawUserPassword);
+        String hashedAdmin = encoder.encode(rawAdminPassword);
+
+        System.out.println("=== BCrypt hashed passwords (for example/testing) ===");
+        System.out.println("User raw: " + rawUserPassword + " -> hashed: " + hashedUser);
+        System.out.println("Admin raw: " + rawAdminPassword + " -> hashed: " + hashedAdmin);
+        System.out.println();
     }
 
 }

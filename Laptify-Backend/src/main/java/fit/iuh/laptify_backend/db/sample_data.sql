@@ -4,12 +4,17 @@ VALUES ('ADMIN'),
        ('USER');
 
 -- Insert Users
+# account admin:
+#         userName: admin@example.com
+#         pass: Admin@123
+#
+# account user:
+#     userName: user@example.com
+#     pass: User@123
 INSERT INTO users (email, name, password, role_id)
-VALUES ('user1@example.com', 'Nguyen Van A', 'hashed_password_1', 2),
-       ('user2@example.com', 'Tran Thi B', 'hashed_password_2', 2),
-       ('user3@example.com', 'Le Van C', 'hashed_password_3', 2),
-       ('user4@example.com', 'Pham Thi D', 'hashed_password_4', 2),
-       ('admin@example.com', 'Admin User', 'hashed_password_admin', 1);
+VALUES ('user@example.com', 'Nguyen Van A', '$2a$10$JrumzfZBcC8ettzTVQrq4uU9wEejhnuUioXGDJgZANkf5qATyDB4.', 2),
+       ('admin@example.com', 'Admin User', '$2a$10$lVSFjIh9zlDhFsDr4eipVu8X4ItTYe0b3SMBX.pF5fyQFplTeUNHG', 1);
+
 
 -- Insert User Placement Infos
 INSERT INTO user_placement_infos (customer_name, phone_number, address, email,is_saved)
